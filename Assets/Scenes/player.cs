@@ -6,16 +6,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float runSpeedMultiplier = 2f;
     [SerializeField] private float jumpForce = 7f;
-    [SerializeField] private float dashForce = 15f;
-    [SerializeField] private float dashCooldown = 1f;
-    [SerializeField] private float doubleTapTime = 0.3f;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private bool canJump = true;
-    private float lastDashTime = -999f;
-    private float lastAKeyTime = -999f;
-    private float lastDKeyTime = -999f;
 
     private void Start()
     {
@@ -50,25 +44,6 @@ public class Player : MonoBehaviour
         if (keyboard.shiftKey.isPressed)
             currentSpeed *= runSpeedMultiplier;
 
-        // A키 더블탭 감지
-        if (keyboard.aKey.wasPressedThisFrame)
-        {
-            if (Time.time - lastAKeyTime < doubleTapTime)
-            {
-                TriggerDash(-1f);
-            }
-            lastAKeyTime = Time.time;
-        }
-
-        // D키 더블탭 감지
-        if (keyboard.dKey.wasPressedThisFrame)
-        {
-            if (Time.time - lastDKeyTime < doubleTapTime)
-            {
-                TriggerDash(1f);
-            }
-            lastDKeyTime = Time.time;
-        }
 
         if (keyboard.aKey.isPressed)
         {
@@ -100,14 +75,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void TriggerDash(float direction)
-    {
-        if (Time.time - lastDashTime < dashCooldown) return;
-        if (rb == null) return;
-
-        rb.AddForce(Vector2.right * direction * dashForce, ForceMode2D.Impulse);
-        lastDashTime = Time.time;
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

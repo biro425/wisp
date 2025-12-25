@@ -527,6 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player
   moveSpeed: 5
+  runSpeedMultiplier: 2
   jumpForce: 5
 --- !u!212 &1179845997
 SpriteRenderer:
